@@ -1,0 +1,276 @@
+---
+title: "workout1-rex-winn"
+author: "Rex Winn"
+date: "March 10, 2019"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+stephen.curry$shot_made_flag <- as.character(stephen.curry$shot_made_flag)
+klay.thompson$shot_made_flag <- as.character(klay.thompson$shot_made_flag)
+andre.iguodala$shot_made_flag <- as.character(andre.iguodala$shot_made_flag)
+kevin.durant$shot_made_flag <- as.character(kevin.durant$shot_made_flag)
+draymond.green$shot_made_flag <- as.character(draymond.green$shot_made_flag)
+
+stephen.curry$action_type <- as.factor(stephen.curry$action_type)
+klay.thompson$action_type <- as.factor(klay.thompson$action_type)
+andre.iguodala$action_type <- as.factor(andre.iguodala$action_type)
+kevin.durant$action_type <- as.factor(kevin.durant$action_type)
+draymond.green$action_type <- as.factor(draymond.green$action_type)
+
+stephen.curry$shot_type <- as.factor(stephen.curry$shot_type)
+klay.thompson$shot_type <- as.factor(klay.thompson$shot_type)
+andre.iguodala$shot_type <- as.factor(andre.iguodala$shot_type)
+kevin.durant$shot_type <- as.factor(kevin.durant$shot_type)
+draymond.green$shot_type <- as.factor(draymond.green$shot_type)
+```
+
+```{r}
+klay.thompson$name <- "Klay Thompson"
+andre.iguodala$name <- "Andre Iguodala"
+draymond.green$name <- "Draymond Green"
+kevin.durant$name <- "Kevin Durant"
+stephen.curry$name <- "Stephen Curry"
+```
+
+```{r}
+klay <- klay.thompson
+klay[klay$shot_made_flag == 'n', 7] <- 'shot_no'
+klay[klay$shot_made_flag == 'y', 7] <- "shot_yes"
+green <- draymond.green
+green[green$shot_made_flag == 'y', 7] <- "shot_yes"
+green[green$shot_made_flag == 'n', 7] <- "shot_no"
+iguodala <- andre.iguodala
+iguodala[iguodala$shot_made_flag == 'y', 7] <- "shot_yes"
+iguodala[iguodala$shot_made_flag == 'n', 7] <- "shot_no"
+durant <- kevin.durant
+durant[durant$shot_made_flag == 'y', 7] <- "shot_yes"
+durant[durant$shot_made_flag == 'n', 7] <- "shot_no"
+curry <- stephen.curry
+curry[curry$shot_made_flag == 'y', 7] <- "shot_yes"
+curry[curry$shot_made_flag == 'n', 7] <- "shot_no"
+
+```
+
+```{r}
+klay$minute <- (klay$period - 1) * 12 + (12 -  klay$minutes_remaining)
+green$minute <- (green$period - 1) * 12 + (12 -  green$minutes_remaining)
+iguodala$minute <- (iguodala$period - 1) * 12 + (12 - iguodala$minutes_remaining)
+durant$minute <- (durant$period - 1) * 12 + (12 -  durant$minutes_remaining)
+curry$minute <- (curry$period -1) * 12 + (12 -  curry$minutes_remaining)
+```
+
+```{r}
+sink(file = "andre-iguodala-summary.txt")
+summary(iguodala)
+sink()
+```
+```{r}
+sink(file = "kevin-druant-summary.txt")
+summary(durant)
+sink()
+```
+```{r}
+sink(file = "stephen-curry-summary.txt")
+summary(curry)
+sink()
+```
+```{r}
+sink(file = "klay.thompson.txt")
+summary(klay)
+sink()
+```
+```{r}
+sink(file = "draymon-green.txt")
+summary(green)
+sink()
+```
+```{r}
+help(rbind)
+shots_data <- rbind(curry,green,durant,klay,iguodala)
+```
+
+
+```{r}
+write.csv(shots_data, file = 'shots-data.csv')
+```
+
+```{r}
+library(ggplot2)
+library(jpeg)
+library(grid)
+court_file <- "../images/nba-court.jpg"
+court_image <- rasterGrob(
+readJPEG(court_file),
+width = unit(1, "npc"),
+height = unit(1, "npc"))
+```
+
+```{r}
+klay_shot_chart <- ggplot(data = klay) +
+annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Chart: Klay Thompson (2016 season)') +
+theme_minimal()
+
+green_shot_chart <- ggplot(data = green) +
+annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Chart: Draymond Green (2016 season)') +
+theme_minimal()
+
+durant_shot_chart <- ggplot(data = durant) +
+annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Chart: Kevin Durant (2016 season)') +
+theme_minimal()
+
+iguodala_shot_chart <- ggplot(data = iguodala) +
+annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Chart: Andre Iguodala (2016 season)') +
+theme_minimal()
+
+curry_shot_chart <- ggplot(data = curry) +
+annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Chart: Stephen Curry (2016 season)') +
+theme_minimal()
+
+```
+
+```{r}
+pdf(file = "andre-iguodala-shot-chart.pdf", width = 6.5, height = 5)
+ggplot(data = iguodala) +
+annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Chart: Andre Iguodala (2016 season)') +
+theme_minimal()
+dev.off()
+```
+```{r}
+pdf(file = "kevin-durant-shot-chart.pdf", width = 6.5, height = 5)
+ggplot(data = durant) +
+annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Chart: Kevin Durant (2016 season)') +
+theme_minimal()
+dev.off()
+```
+```{r}
+pdf(file = "stephen-curry-shot-chart.pdf", width = 6.5, height = 5)
+ggplot(data = curry) +
+annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Chart: Stephen Curry (2016 season)') +
+theme_minimal()
+dev.off()
+
+```
+```{r}
+pdf(file = "klay-thompson-shot-chart.pdf", width = 6.5, height = 5)
+ggplot(data = klay) +
+annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Chart: Klay Thompson (2016 season)') +
+theme_minimal()
+dev.off()
+```
+
+```{r}
+pdf(file = "draymond-green-shot-char.pdf", width = 6.5, height = 5)
+ggplot(data = green) +
+annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Chart: Draymond Green (2016 season)') +
+theme_minimal()
+dev.off()
+```
+```{r}
+pdf(file = "gsw-shot-charts.pdf", width = 8, height = 7)
+ggplot(data = shots_data) + facet_wrap(~ name) + annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Charts (2016 season)') +
+theme_minimal()
+dev.off
+```
+```{r}
+png(filename = "gsw-shot-charts.png", width = 8, height = 7, units = "in", res = 72)
+ggplot(data = shots_data) + facet_wrap(~ name) + annotation_custom(court_image, -250, 250, -50, 420) +
+geom_point(aes(x = x, y = y, color = shot_made_flag)) +
+ylim(-50, 420) +
+ggtitle('Shot Charts (2016 season)') +
+theme_minimal()
+dev.off
+```
+5.1)
+
+```{r}
+player_names <- c("Andre Iguodala", "Stephen Curry", "Kevin Durant", "Draymond Green", "Klay Thompson")
+total2 <- c(sum(shots_data$name == "Andre Iguodala" & shots_data$shot_type == '2PT Field Goal'), sum(shots_data$name == "Stephen Curry" & shots_data$shot_type == '2PT Field Goal'), sum(shots_data$name == "Kevin Durant" & shots_data$shot_type == '2PT Field Goal'), sum(shots_data$name == "Draymond Green" & shots_data$shot_type == '2PT Field Goal'), sum(shots_data$name == "Klay Thompson" & shots_data$shot_type == '2PT Field Goal'))
+made2 <- c(sum(shots_data$name == "Andre Iguodala" & shots_data$shot_type == '2PT Field Goal' & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Stephen Curry" & shots_data$shot_type == '2PT Field Goal' & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Kevin Durant" & shots_data$shot_type == '2PT Field Goal' & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Draymond Green" & shots_data$shot_type == '2PT Field Goal' & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Klay Thompson" & shots_data$shot_type == '2PT Field Goal' & shots_data$shot_made_flag == 'shot_yes'))
+perc_made2 <- made2/total2 * 100
+table_2pt <- data.frame(player_names, total2, made2, perc_made2)
+table_2pt
+```
+```{r}
+total3 <- c(sum(shots_data$name == "Andre Iguodala" & shots_data$shot_type == '3PT Field Goal'), sum(shots_data$name == "Stephen Curry" & shots_data$shot_type == '3PT Field Goal'), sum(shots_data$name == "Kevin Durant" & shots_data$shot_type == '3PT Field Goal'), sum(shots_data$name == "Draymond Green" & shots_data$shot_type == '3PT Field Goal'), sum(shots_data$name == "Klay Thompson" & shots_data$shot_type == '3PT Field Goal'))
+
+made3 <- c(sum(shots_data$name == "Andre Iguodala" & shots_data$shot_type == '3PT Field Goal' & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Stephen Curry" & shots_data$shot_type == '3PT Field Goal' & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Kevin Durant" & shots_data$shot_type == '3PT Field Goal' & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Draymond Green" & shots_data$shot_type == '3PT Field Goal' & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Klay Thompson" & shots_data$shot_type == '3PT Field Goal' & shots_data$shot_made_flag == 'shot_yes'))
+
+perc_made3 <- made3/total3 * 100
+table_3pt <- data.frame(player_names, total3, made3, perc_made3)
+table_3pt
+```
+```{r}
+total <- c(sum(shots_data$name == "Andre Iguodala"), sum(shots_data$name == "Stephen Curry"), sum(shots_data$name == "Kevin Durant"), sum(shots_data$name == "Draymond Green"), sum(shots_data$name == "Klay Thompson"))
+
+made <- c(sum(shots_data$name == "Andre Iguodala" & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Stephen Curry" & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Kevin Durant" & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Draymond Green" & shots_data$shot_made_flag == 'shot_yes'), sum(shots_data$name == "Klay Thompson" & shots_data$shot_made_flag == 'shot_yes'))
+
+perc_made <- made/total * 100
+table <- data.frame(player_names, total, made, perc_made)
+table
+fintable <- table[order(table$perc_made, decreasing = TRUE),]
+fintable
+fintable2 <- table_2pt[order(table_2pt$perc_made2, decreasing = TRUE),]
+fintable2
+fintable3 <- table_3pt[order(table_3pt$perc_made3, decreasing = TRUE), ]
+fintable3
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
