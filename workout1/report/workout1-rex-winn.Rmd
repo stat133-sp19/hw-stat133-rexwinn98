@@ -252,6 +252,23 @@ fintable3 <- table_3pt[order(table_3pt$perc_made3, decreasing = TRUE), ]
 fintable3
 ```
 
+# Article:
+# In 2016 Klay Thompson was better at three point shooting than Steph Curry
+## Motivation:
+  Steph Curry is far more popular than Klay Thompson, . But is it worth the hype. 
+## Background:
+  Shooting percentage is one of the best metrics to measure performance of a basketball player.
+## Data:
+```{r}
+fintable3
+curry_shot_chart
+klay_shot_chart
+```
+## Conclusion:
+  Despite Curry's episodic sprees of three point shooting, Klay Thompson has a higher three point percentage than Steph Curry, granted it is with a lower amount of of attempts.   
+
+
+
 
 
 
