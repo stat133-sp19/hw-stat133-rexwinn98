@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1556776538217.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "40258722",
+    "id" : "7F512FCB",
+    "lastKnownWriteTime" : 1556926678,
+    "last_content_update" : 1556926678,
+    "path" : "C:/Users/Rex Winn/Desktop/binomial/R/binomial.R",
+    "project_path" : "R/binomial.R",
+    "properties" : {
+        "cursorPosition" : "2,0",
+        "scrollLine" : "213"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

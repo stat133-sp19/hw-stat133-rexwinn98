@@ -1,0 +1,51 @@
+---
+title: "introduction"
+author: "Rex Winn"
+date: "May 3, 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Binomial Choose
+
+Use this function to calculate the number of combinations of successes in trials.
+
+## Binomial Probability
+
+Use this function to calculate the probability of getting a number of successes fron number of trials. 
+
+## Binomial Distribution
+
+Use this function to calculates the probabilities  of getting 0 through trials successes .
+
+## Binomial Cumulation 
+
+Use this function to calculate the probabilitis of getting o through trials successes, while also getting a vector of their cumulative probabilities. 
+
+## Binomial Variable
+
+Use this function gives all the stats about a binomial variable, using summary. 
+
+## Binomial Mean
+
+Use this function to find the mean of a binomial variable.
+
+## Binomial Variance
+
+Use this function to find the variance of a binomial variable.
+
+## Binomial Mode 
+
+Use ths function to find the mode of a binomial variable.
+
+## Binomial Skewness
+
+Use this function ot find the skewdness of a binomial distribuition.
+
+## Binomial Kurtosis
+
+Use this function to find the kurtosis of a binomial distribution. 
